@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="auto">
+<html lang="en" data-bs-theme="dark">
 
   <head>
     <!-- Required meta tags -->
@@ -19,12 +19,6 @@
     {% endif %}
 
     <style>
-      tbody {
-        font-size: 18px;
-        font-family: Arial, Helvetica, sans-serif;
-        text-align: left;
-      }
-
       body {
         padding-top: 80px;
       }
@@ -130,7 +124,7 @@
             </li>
           </ul>
           <form class="d-flex" role="button">
-            <input class="form-control me-2" type="file">
+            <!-- <input class="form-control me-2" type="file"> -->
           </form>
         </div>
       </div>
@@ -138,14 +132,13 @@
 
     <div class="container-fluid">
       <div class="row flex-nowrap">
-        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+        <div class="col-auto col-md-auto col-xl-1 px-sm-3 px-0 bg-dark">
           <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-5 text-white min-vh-100">
             <a href="/ciAssociatedServices/ALL"
               class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">
               <span class="fs-5 d-none d-sm-inline">ALL GCs</span>
             </a>
-            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start display-6"
-              id="menu">
+            <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
               <li class="nav-item">
                 <a href="/ciAssociatedServices/TMA" class="nav-link align-middle px-0">
                   <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">TMA</span>
@@ -230,6 +223,14 @@
     <script>
       $(document).ready(function () {
         $('#table').DataTable();
+      });
+      new DataTable('#table', {
+        language: {
+          entries: {
+            _: 'CIs',
+            1: 'CI'
+          }
+        }
       });
     </script>
   </body>

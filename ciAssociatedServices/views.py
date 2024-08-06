@@ -9,7 +9,7 @@ xls_filename = './ciAssociatedServices/static/ciAssociatedServices/appfiles/TM_C
 def generate_html(dataframe: pd.DataFrame):
     '''get the table HTML from the dataframe'''
     tableid = 'table'
-    table_html = dataframe.to_html(justify="center", table_id=tableid, header=True)
+    table_html = dataframe.to_html(justify="center", table_id=tableid, header=True, render_links=True, classes=['fs-5', 'text-start', 'fst-italic'], index=False)
     # construct the complete HTML with jQuery Data tables
     # You can disable paging or enable y scrolling on lines 20 and 21 respectively
     html = f"""
