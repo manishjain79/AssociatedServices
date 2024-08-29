@@ -61,23 +61,21 @@ def parse_header(request):
     roles = []
     for role_dict in roles_from_claim:
         roles.append(role_dict['val'])
+    print(name)     # printed on console for debug
+    print(roles)    # printed on coonsole for debug
     return (roles, name)
 
 # Create your views here.
 def home(request):
     '''
-    This function gets executed upon calling for any gcname.
+    This is the home page showing if someone has access to this service or not.
     '''
-    (roles, name) = parse_header(request=request)
+    (roles, name) = parse_header(request)
     gcaccess = []
     for role in roles:
         if role.split(".")[0] == 'TM':
             gc = role.split(".")[1]
             gcaccess.append(gc)
-    # # context = {
-    # #     'data_table': gethtmltemplate(xls_filename,'CIs_Asscoiated Service Offering','GC', 'ALL'),
-    # #     'title': 'Home' }
-    # return render(request, 'ciAssociatedServices/gc.html', context)
     context = {
         'assigned_gc': gcaccess
     }
@@ -87,25 +85,7 @@ def home(request):
 def GCDetails(request, gcname):
     '''
     This function gets executed upon calling for any gcname.
-    '''
-    # headers = request.headers
-    # client_principal = headers['X-Ms-Client-Principal']
-    # principal_name = headers['X-Ms-Client-Principal-Name']
-    # # print(client_principal)
-    # # Payload is base64 encoded, let's decode it to plain string
-    # # To make sure decoding will always work - we're adding max padding ("==")
-    # # to payload - it will be ignored if not needed.
-    # client_principal_decoded = str(base64.b64decode(client_principal + "=="), "utf-8")
-    # # Payload is JSON - we can load it to dict for easy access
-    # client_principal = json.loads(client_principal_decoded)
-    # # print(client_principal)
-    # roles_from_claim = filter(lambda claim: claim['typ'] == 'roles', client_principal['claims'])
-    # name_from_claim = roles = filter(lambda claim: claim['typ'] == 'name', client_principal['claims'])
-    # name = next(name_from_claim)['val']
-    # roles = []
-    # for role_dict in roles_from_claim:
-    #     roles.append(role_dict['val'])
-    
+    ''' 
     (roles, name) = parse_header(request=request)
 
     found = False

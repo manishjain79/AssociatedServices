@@ -1,4 +1,8 @@
 {% extends "ciAssociatedServices/base.html" %}
 {% block content %}
-    <h2>You have access to {{ assigned_gc }}</h2>
+    {% if assigned_gc %}
+        <h2>You have access to {{ assigned_gc }}</h2>
+    {% else %}
+        <h2>You have no access to this service</h2>
+    {% endif %}
 {% endblock content %}
