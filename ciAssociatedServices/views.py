@@ -77,8 +77,10 @@ def GCDetails(request, gcname):
     '''
     This function gets executed upon calling for any gcname.
     '''
+    print(request.headers)
     context = {
         'data_table': gethtmltemplate(xls_filename,'CIs_Asscoiated Service Offering','GC', gcname),
         'title': 'Home',
          'currentselection': gcname }
+    
     return render(request, 'ciAssociatedServices/gc.html', context)
