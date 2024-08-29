@@ -112,4 +112,4 @@ def GCDetails(request, gcname):
     if found:
         return render(request, 'ciAssociatedServices/gc.html', context)
     else:
-        return render(request, 'ciAssociatedServices/no_access.html', context)
+        return render(request, 'ciAssociatedServices/no_access.html', {'currentselection':gcname})
