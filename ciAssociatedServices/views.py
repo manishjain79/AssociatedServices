@@ -111,3 +111,5 @@ def GCDetails(request, gcname):
                 }
     if found:
         return render(request, 'ciAssociatedServices/gc.html', context)
+    else:
+        return render(request, 'ciAssociatedServices/gc.html', context)
