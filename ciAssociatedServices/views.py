@@ -79,7 +79,6 @@ def GCDetails(request, gcname):
     '''
     This function gets executed upon calling for any gcname.
     '''
-    print('manish')
     headers = request.headers
     client_principal = headers['X-Ms-Client-Principal']
     principal_name = headers['X-Ms-Client-Principal-Name']
@@ -98,6 +97,7 @@ def GCDetails(request, gcname):
     for role_dict in roles_from_claim:
         roles.append(role_dict['val'])
 
+    found = False
     for role in roles:
         if role.split(".")[0] == 'TM':
             gc = role.split(".")[1]
