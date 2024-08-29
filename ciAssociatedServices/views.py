@@ -1,6 +1,8 @@
 from pathlib import Path
 from django.shortcuts import render
 import pandas as pd
+import base64
+import json
 
 xls_filename = './ciAssociatedServices/static/ciAssociatedServices/appfiles/TM_CIs_Associated_Service.xlsx'
 
@@ -77,10 +79,35 @@ def GCDetails(request, gcname):
     '''
     This function gets executed upon calling for any gcname.
     '''
-    print(request.headers)
-    context = {
-        'data_table': gethtmltemplate(xls_filename,'CIs_Asscoiated Service Offering','GC', gcname),
-        'title': 'Home',
-         'currentselection': gcname }
-    
-    return render(request, 'ciAssociatedServices/gc.html', context)
+    print('manish')
+    headers = request.headers
+    client_principal = headers['X-Ms-Client-Principal']
+    principal_name = headers['X-Ms-Client-Principal-Name']
+    # print(client_principal)
+    # Payload is base64 encoded, let's decode it to plain string
+    # To make sure decoding will always work - we're adding max padding ("==")
+    # to payload - it will be ignored if not needed.
+    client_principal_decoded = str(base64.b64decode(client_principal + "=="), "utf-8")
+    # Payload is JSON - we can load it to dict for easy access
+    client_principal = json.loads(client_principal_decoded)
+    # print(client_principal)
+    roles_from_claim = filter(lambda claim: claim['typ'] == 'roles', client_principal['claims'])
+    name_from_claim = roles = filter(lambda claim: claim['typ'] == 'name', client_principal['claims'])
+    name = next(name_from_claim)['val']
+    roles = []
+    for role_dict in roles_from_claim:
+        roles.append(role_dict['val'])
+
+    for role in roles:
+        if role.split(".")[0] == 'TM':
+            gc = role.split(".")[1]
+        if gc == gcname:
+            found = True
+            context = {
+                'data_table': gethtmltemplate(xls_filename,'CIs_Asscoiated Service Offering','GC', gcname),
+                'title': 'Home',
+                'currentselection': gcname,
+                'username': name
+                }
+    if found:
+        return render(request, 'ciAssociatedServices/gc.html', context)
